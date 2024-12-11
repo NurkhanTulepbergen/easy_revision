@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'store_detail.css' %}">
+    <div class="container mt-5">
+        <h2 class="text-center">Информация о магазине</h2>
+        {% if message %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endif %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Название: {{ store.name }}</h5>
+                <p class="card-text">Описание: {{ store.description }}</p>
+                <p class="card-text">Адрес: {{ store.address }}</p>
+                <p class="card-text">Контакт: {{ store.contact }}</p>
+            </div>
+        </div>
+
+        <h3 class="mt-4" style="text-align: center;">Обновить информацию</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+    </div>
+{% endblock %}

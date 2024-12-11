@@ -1,0 +1,13 @@
+<!-- templates/create_report.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <h2>Создать отчет для {{ request.user.store_user.name }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Создать отчет</button>
+    </form>
+{% endblock %}

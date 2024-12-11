@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Products{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Все товары в магазине</h1>
+
+    <!-- Поиск товаров -->
+    <div class="mb-4">
+        <h4>Поиск</h4>
+        <form method="GET" action="{% url 'home' %}">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" value="{{ request.GET.search }}" placeholder="Введите название товара" aria-label="Search">
+                <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Фильтр по категориям -->
+    <div class="mb-4">
+        <h4>Фильтровать по категории</h4>
+        <form method="GET" action="{% url 'home' %}">
+            <select name="category" class="form-select" onchange="this.form.submit()">
+                <option value="">Все категории</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+
+    <!-- Список товаров -->
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+                    <p><strong>Цена:</strong> {{ product.sale_price }} KZT</p>
+                    <p><strong>Количество:</strong> {{ product.quantity }}</p>
+                    <p><strong>Категория:</strong> {{ product.category.name }}</p>
+
+                    <!-- Кнопка для добавления в корзину -->
+                    <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Добавить в корзину</button>
+                    </form>
+
+                    <a href="{% url 'edit_product' product.id %}" class="btn btn-warning">Изменить</a>
+                    <a href="{% url 'delete_product' product.id %}" class="btn btn-danger" onclick="return confirm('Удалить продукт?');">Удалить</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Товары не найдены в этой категории.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Кнопка для добавления нового продукта -->
+    <div class="text-end mb-4">
+        <a href="{% url 'add_product' %}" class="btn btn-success">Добавить продукт</a>
+    </div>
+</div>
+
+{% endblock %}

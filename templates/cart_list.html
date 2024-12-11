@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Корзина</h2>
+
+    {% if error %}
+    <p class="text-danger">{{ error }}</p>
+    {% endif %}
+
+    {% if cart %}
+    <form method="POST" action="{% url 'cart_checkout' %}">
+        {% csrf_token %}
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Продукт</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Итого</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart.cart_items.all %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>${{ item.product.sale_price }}</td>
+                    <td>
+                        <input type="number" name="quantity_{{ item.id }}" value="{{ item.quantity }}" min="1">
+                    </td>
+                    <td>${{ item.get_cost }}</td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" formaction="{% url 'update_cart_item' item.id %}">Обновить</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Общая стоимость: ${{ cart.get_total_cost }}</h3>
+        <a href="{% url 'cart_checkout' %}" class="btn btn-success">Оформить заказ</a>
+    </form>
+    {% else %}
+    <p>Ваша корзина пуста.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'store_reports.css' %}">
+
+    <h2>Отчеты для {{ request.user.store_user.name }}</h2>
+
+    <a href="{% url 'create_report' %}" class="btn btn-success">Создать отчет</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Тип отчета</th>
+                <th>Доход</th>
+                <th>Расходы</th>
+                <th>Чистая прибыль</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports %}
+            <tr>
+                <td>{{ report.date }}</td>
+                <td>{{ report.get_report_type_display }}</td>
+                <td>{{ report.total_revenue }}</td>
+                <td>{{ report.total_expenses }}</td>
+                <td>{{ report.total_profit }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

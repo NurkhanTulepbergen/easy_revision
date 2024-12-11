@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+            <link rel="stylesheet" href="{% static 'add_product.css' %}">
+
+<div class="container mt-5">
+    <h2 class="text-center">Добавить продукт</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Добавить продукт</button>
+    </form>
+</div>
+{% endblock %}

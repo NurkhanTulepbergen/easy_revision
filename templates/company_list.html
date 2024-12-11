@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Company Information{% endblock %}
+
+{% block content %}
+<h1>Companies Information</h1>
+
+<!-- Company List -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for company in companies %}
+        <tr>
+            <td>{{ company.name }}</td>
+            <td>{{ company.contact }}</td>
+            <td>{{ company.address }}</td>
+            <td>{{ company.description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

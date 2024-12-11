@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Product Trends</h1>
+    <canvas id="productTrendsChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetch analytics data from API
+        fetch("{% url 'product_trends' %}")
+            .then(response => response.json())
+            .then(data => {
+                // Render the chart using Chart.js
+                const ctx = document.getElementById('productTrendsChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.categories,  // Categories for x-axis
+                        datasets: [{
+                            label: 'Products Sold',
+                            data: data.sales,  // Sales data for y-axis
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    });
+</script>
+{% endblock %}

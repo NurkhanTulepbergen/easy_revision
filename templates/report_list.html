@@ -1,0 +1,29 @@
+{% extends "baseCompany.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<h1>Reports</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Company</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Total Revenue</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for report in reports %}
+        <tr>
+            <td>{{ report.id }}</td>
+            <td>{{ report.company.name }}</td>
+            <td>{{ report.get_report_type_display }}</td>
+            <td>{{ report.date }}</td>
+            <td>{{ report.total_revenue }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

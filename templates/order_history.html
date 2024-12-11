@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Order History{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Order History</h2>
+
+    {% if error %}
+    <p class="text-danger">{{ error }}</p>
+    {% endif %}
+
+    {% if orders %}
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Total Revenue</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.company.name }}</td>
+                <td>{{ order.status }}</td>
+                <td>${{ order.total_revenue }}</td>
+                <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+                <td>
+                    <a href="{% url 'order_detail' order.id %}" class="btn btn-primary btn-sm">View Details</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No orders found for your store.</p>
+    {% endif %}
+</div>
+{% endblock %}
