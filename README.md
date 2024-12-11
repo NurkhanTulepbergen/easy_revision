@@ -11,7 +11,7 @@ Company integration: Companies process orders and manage their own product assor
 Cart and order management: Stores manage customer orders and track their status.
 Tech Stack
 Backend: Django, Django Rest Framework
-Frontend: Angular, HTML, CSS, Bootstrap
+Frontend: HTML, CSS, Bootstrap
 Database: SQLite (or PostgreSQL/MySQL)
 Libraries: Chart.js (for visualizing product trends)
 Authentication: JWT (JSON Web Tokens) for API security
@@ -28,47 +28,39 @@ PostgreSQL or MySQL (optional for production)
 Installation
 Clone the Repository
 bash
-Копировать код
 git clone https://github.com/yourusername/store-management-system.git
 cd store-management-system
 Backend Setup
 Create and activate a virtual environment:
 
 bash
-Копировать код
 python3 -m venv venv
 source venv/bin/activate  # On Windows use: venv\Scripts\activate
 Install the required Python packages:
 
 bash
-Копировать код
 pip install -r requirements.txt
 Apply database migrations:
 
 bash
-Копировать код
 python manage.py migrate
 Create a superuser for the Django admin:
 
 bash
-Копировать код
 python manage.py createsuperuser
 Start the Django development server:
 
 bash
-Копировать код
 python manage.py runserver
 Frontend Setup
 Navigate to the frontend directory and install dependencies:
 
 bash
-Копировать код
 cd frontend
 npm install
 Run the Angular development server:
 
 bash
-Копировать код
 ng serve
 Your frontend will be accessible at http://localhost:4200/.
 
@@ -86,11 +78,9 @@ Testing
 To run unit tests for the project, use:
 
 bash
-Копировать код
 pytest
 For detailed test coverage, run:
 
 bash
-Копировать код
 pytest --cov=store_management --cov-report=html
 This will generate a coverage report in HTML format.
